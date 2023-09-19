@@ -11,10 +11,14 @@ class Coffee:
         return self.customers_list
     
     def num_orders(self):
-        pass
+        return len(self.orders_list)
     
     def average_price(self):
-        pass
+        if len(self.orders_list) == 0 :
+            return 0
+        else:
+            prices_list = [order.price for order in self.orders_list]
+            return sum(prices_list) / len(prices_list)
 
     @property
     def name(self):
@@ -39,7 +43,7 @@ class Customer:
         return self.coffees_list
     
     def create_order(self, coffee, price):
-        pass
+        return Order(self, coffee, price)
 
     @property
     def name(self):
@@ -52,6 +56,9 @@ class Customer:
             print('Error')
     
 class Order:
+
+    all = []
+
     def __init__(self, customer, coffee, price):
         self.customer = customer
         self.coffee = coffee
@@ -65,6 +72,8 @@ class Order:
         
         if not (coffee in self.customer.coffees_list):
             self.customer.coffees_list.append(coffee)
+
+        Order.all.append(self)
 
     @property
     def price(self):
